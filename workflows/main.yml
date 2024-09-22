@@ -1,0 +1,25 @@
+name: Deploy Cloud Function
+
+on:
+  push:
+    branches:
+      - master # Despliega en el branch 'master'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # Usa un runner de Ubuntu
+
+    steps:
+    - uses: actions/checkout@v3 # Extrae el código del repositorio
+    - name: Install Dependencies
+      run: npm install # Instala las dependencias del proyecto
+    - name: Deploy to Cloud Functions
+      uses: google-github-actions/deploy-cloudfunctions@v1 # Utiliza la acción de despliegue de Google
+      with:
+        project_id: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }} # Reemplaza con tu ID de proyecto
+        function_name: my-cloud-function # Reemplaza con el nombre de tu función
+        region: us-central1 # Reemplaza con la región de tu función
+        runtime: nodejs18 # Reemplaza con el runtime de tu función
+        entry_point: myPostFunction # Reemplaza con el punto de entrada de tu función
+        source: functions/src # Indica la ubicación de tu código
+        service_account: ${{ secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY }} 
