@@ -22,3 +22,4 @@ jobs:
         entry_point: myPostFunction
         source: functions/src 
         service_account: ${{ secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY }}
+        name: my-cloud-function
